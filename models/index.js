@@ -1,9 +1,12 @@
 const User = require('../models/User');
 const Anime = require('../models/Anime');
 
-//Anime belongs to User. Don't forget foreignKey
+User.hasMany(Anime, {
+    foreignKey: 'user_id',
+});
 
-
-//User has many Anime
+Anime.belongsTo(User, {
+    foreignKey: 'user_id',
+});
 
 module.exports = { User, Anime };
