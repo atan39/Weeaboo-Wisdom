@@ -1,5 +1,7 @@
 //rework this file for the anime db table
 //note to self, this is used to send the anime db to HTML page using the .render function
+//routes of USER favorites 
+//favorites routes
 
 const router = require('express').Router();
 const { Anime } = require('../models');
