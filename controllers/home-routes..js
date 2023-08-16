@@ -1,5 +1,7 @@
 //rework this file for the anime db table
 //note to self, this is used to send the anime db to HTML page using the .render function
+//page for this would be userlist
+
 
 const router = require('express').Router();
 const { Anime } = require('../models');
@@ -10,14 +12,6 @@ const { Anime } = require('../models');
 router.get('/', async (req, res) => {
   try {
     const dbAnimeData = await Anime.findAll({
-      /*
-      include: [
-        {
-          model: Painting,
-          attributes: ['filename', 'description'],
-        },
-      ],
-      */
     });
 
     const animes = dbAnimeData.map((anime) =>
@@ -25,7 +19,8 @@ router.get('/', async (req, res) => {
     );
     // Send over the 'loggedIn' session variable to the 'homepage' template
     //need to change the location of this page
-    res.render('homepage', {
+  
+    res.render('userlist', {
       animes,
       loggedIn: req.session.loggedIn,
     });
@@ -58,7 +53,7 @@ router.get('/anime/:id', async (req, res) => {
 
     const animes = dbAnimeData.get({ plain: true });
     // Send over the 'loggedIn' session variable to the 'anime' template
-    res.render('anime', { animes, loggedIn: req.session.loggedIn });
+    res.render('userlist', { animes, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
