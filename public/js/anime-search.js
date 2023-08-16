@@ -227,7 +227,8 @@ console.log(JSON.parse(JSON.stringify(animeListJson)));
 //returns the completed JSON to be used
 //return JSON.parse(JSON.stringify(animeListJson));
 
-/*returns obj array of the search result that can be used for html
+/*
+returns obj array of the search result that can be used for html
 formated as shown
 animeListJson[index].id
 animeListJson[index].title
@@ -236,16 +237,53 @@ animeListJson[index].image
 animeListJson[index].synopsis
 to break into a json file you need to 
 JSON.parse(JSON.stringify(animeListJson)
+*/
+let content = document.querySelector('#anime-results');
+if(content.hasChildNodes())
+  {
+    removeAllChildNodes(content)
+  }
 
 for(let i = 0; i < animeListJson.length; i++)
 {
   printResult(animeListJson[i]);
 }
-*/
+
 return animeListJson;
 }
 
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
 function printResult(anime){
+
+  let content = document.querySelector('#anime-results');
+  let result = document.createElement("div");
+  let animeNameEl = document.createElement("p");
+  animeNameEl.textContent = anime.title; 
+  animeNameEl.style.justifyContent = "center";
+  result.append(animeNameEl);
+  let imageEl = document.createElement('img'); 
+  imageEl.src = anime.image;
+  result.append(imageEl);
+  let animeGengreEl = document.createElement('p');
+  animeGengreEl.innerHTML = '<strong> Genre(s): </strong> ' + anime.genres + '</br>'; 
+   
+  let animeSypnosisEl = document.createElement('p');
+  animeSypnosisEl.innerHTML = '<strong> Sypnosis: </strong> ' + anime.synopsis + '</br>'; 
+  result.append(animeGengreEl, animeSypnosisEl);
+
+  saveBtn = document.createElement('button');
+  saveBtn.classList.add("button","is-medium", "is-dark","is-responsive","is-rounded"); //style with bulma
+  saveBtn.textContent = "Save";
+  result.append(saveBtn);
+
+  content.append(result);
+
+  /*
   let resultCard = document.createElement("div");
   resultCard.classList.add("card");
 
@@ -259,7 +297,6 @@ function printResult(anime){
   animeNameEl.style.justifyContent = "center";
   resultHeader.append(animeNameEl);
 
-  //look at this later
   let resultBody = document.createElement("div");
   resultBody.classList.add("card-content", "is-size-5-mobile", "is-size-5-touch", "is-size-5-tablet", "is-size-5-desktop", "is-size-5-widescreen", "is-size-5-fullhd");
   resultCard.append(resultBody);
@@ -274,11 +311,10 @@ function printResult(anime){
   leftImageDiv.style.width = "20%";
   mediaDiv.append(leftImageDiv);
 
-  /* might not be needed
+  
   let imageFigure = document.createElement("figure");
   imageFigure.classList.add("image"); 
   leftImageDiv.append(imageFigure);
-  */
 
   let imageEl = document.createElement('img'); 
   imageEl.src = anime.image;
@@ -301,21 +337,41 @@ function printResult(anime){
   saveBtn = document.createElement('button');
   saveBtn.classList.add("button","is-medium", "is-dark","is-responsive","is-rounded"); //style with bulma
   saveBtn.textContent = "Save";
+*/
+  //look at later
+  saveBtn.addEventListener('click', async function (event, anime) {
 
-  saveBtn.addEventListener('click', async function () {
+    console.log(typeof (event.target.id));
+    if (event.target.hasAttribute('data-id')) {
+      //const id = event.target.getAttribute('data-id');
+      const response = await fetch(`/api/animes`, {
+        method: 'POST',
+        body: JSON.stringify(anime),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        document.location.replace('/profile');
+      } else {
+        alert('Failed to create project');
+      }
+    }
+  
+    //event.target.id
     /* ???
     POST REQUEST
     axios.poost here?
     axios.post to Anime?
      */
-    const response = await axios.post("/anime-routes", anime);
     //this goes to anime-routes
     //anime-routes puts in the anime table if user exists
     //look for user 
-    
-   
+
   });
 
+  /*
   let cardFooter = document.createElement("footer");
   cardFooter.classList.add("card-footer");
   resultCard.append(cardFooter);
@@ -324,7 +380,7 @@ function printResult(anime){
   cardFooter.style.paddingTop = "8px";
   cardFooter.style.paddingBottom = "20px";
   cardFooter.append(saveBtn);
-
+*/
 }
 document
   .querySelector('.new-project-form')
