@@ -1,6 +1,16 @@
 const router = require('express').Router();
 
 const apiRoutes = require('./api');
+const homeRoutes = require('./home-routes');
+
+router.use('/', homeRoutes);
+router.use('/api', apiRoutes);
+
+module.exports = router;
+/*
+const router = require('express').Router();
+
+const apiRoutes = require('./api');
 
 //not usable till I decide how to use these
 //might be rename to use for results-routes.js or something
@@ -10,3 +20,4 @@ router.use('/', homeRoutes);
 router.use('/api', apiRoutes);
 
 module.exports = router;
+*/

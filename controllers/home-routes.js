@@ -20,7 +20,8 @@ router.get('/', async (req, res) => {
     // Send over the 'loggedIn' session variable to the 'homepage' template
     //need to change the location of this page
   
-    res.render('userlist', {
+    //may need to rework page
+    res.render('homepage', {
       animes,
       loggedIn: req.session.loggedIn,
     });

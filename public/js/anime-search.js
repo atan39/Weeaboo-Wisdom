@@ -59,7 +59,7 @@ async function findAnimeList(name, genres, type) {
     "Hentai",
   ];
 
-  console.log(genreList[0].toLowerCase());
+  //console.log(genreList[0].toLowerCase());
   
   let genreUrlList = [
     "Award%20Winning%2C%20",
@@ -85,7 +85,8 @@ async function findAnimeList(name, genres, type) {
     "Hentai%2C%20",
   ];
   
-  const typeList =["TV", "OVA", "Movie"];
+  let typeList =["TV", "OVA", "Movie"];
+  let typeUrlList =["TV%2C%20", "OVA%2C%20", "Movie%2C%20"];
   
 console.log(genres);
     //checks if they enter a name or genre
@@ -112,24 +113,40 @@ console.log(genres);
     else{
       genres = "";
     }
+    
 
     if(type)
     {
-
+      const typesArray = type.split(",");
+      type = "";
+      for(let i = 0; i < typesArray.length; i++)
+      {
+        for(let j = 0; j < typeList.length; j++)
+        {
+          if(typesArray[i].toLowerCase() === typeList[j].toLowerCase())
+          {
+            type+= typeUrlList[j];
+          }
+        }
+      }
     }
     else{
       type = "TV";
     }
 
-    let aniemName = name.split(" ");
-    name = "";
-    for (let i = 0; i < aniemName.length; i++)
+    if(!name)
     {
-      name+= aniemName[i] + "%20"
+      name = "";
     }
-
-    console.log(name);
-
+    else{
+      let aniemName = name.split(" ");
+      name = "";
+      for (let i = 0; i < aniemName.length; i++)
+      {
+        name+= aniemName[i] + "%20"
+      }
+    }
+    
     /*
     const url = 'https://anime-db.p.rapidapi.com/anime?page=1&size=10&search=fullmetal';
 const options = {
@@ -148,8 +165,8 @@ try {
 	console.error(error);
 }
      */
-    const url = 'https://anime-db.p.rapidapi.com/anime?page=1&size=10&search=' + name + '&genres='+genres +'&sortBy=ranking&sortOrder=asc&types=' + type;
-  
+    const url = 'https://anime-db.p.rapidapi.com/anime?page=1&size=20&search=' + name + '&genres='+genres +'&sortBy=ranking&sortOrder=asc&types=' + type;
+    console.log(url);
     const options = {
       method: 'GET',
       headers: {
@@ -341,7 +358,7 @@ function printResult(anime){
   //look at later
   saveBtn.addEventListener('click', async function (event, anime) {
 
-    console.log(typeof (event.target.id));
+    //console.log(typeof (event.target.id));
     if (event.target.hasAttribute('data-id')) {
       //const id = event.target.getAttribute('data-id');
       const response = await fetch(`/api/animes`, {
