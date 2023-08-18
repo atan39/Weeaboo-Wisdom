@@ -1,4 +1,37 @@
+:root {
+    background-color: #ADD8E6;
+    font-family: 'Shadows Into Light', cursive;
+}
+
+
 header h1 {
     text-align: center;
+    text-shadow: 2px 2px 5px blue;
+    font-size: 100px;
+}
 
+
+a {
+    font-size: 50px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.form-group {
+    text-align: center;
+    font-size: 25px;
+}
+
+.subtitle2 {
+    text-align: center;
+}
+
+gif {
+    position: absolute;
+    top: 50px;
+    right: 100px;
 }
