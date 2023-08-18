@@ -54,7 +54,7 @@ router.get('/search', withAuth, async (req, res) => {
 
     res.render('profile', {
       ...user,
-      logged_in: true
+      loggedIn: true
     });
   } catch (err) {
     res.status(500).json(err);
