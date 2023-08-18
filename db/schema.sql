@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS user_db;
-CREATE DATABASE user_db;
+DROP DATABASE IF EXISTS weeaboo_wisdom_db;
+CREATE DATABASE weeaboo_wisdom_db;
