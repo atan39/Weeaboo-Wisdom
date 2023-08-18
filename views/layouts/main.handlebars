@@ -1,4 +1,6 @@
+<!DOCTYPE html>
 <html lang="en">
+  
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,6 +17,7 @@
       <a href="/">Home</a>
       {{#if loggedIn}}
         <button id="logout" class="btn-no-style">Logout</button>
+         <button id="logout">Logout</button>
       {{else}}
         <a href="/login">Login</a>
       {{/if}}
@@ -25,6 +28,8 @@
     <footer>
 
     </footer>
-    <script src="/js/logout.js"></script>
+    {{#if loggedin}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
   </body>
 </html>

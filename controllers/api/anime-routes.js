@@ -1,12 +1,17 @@
 const router = require('express').Router();
 const { Anime } = require('../../models');
 
-router.get('/search', async (req, res) => {
-  res.render('search', {
+
+router.get('/search', (req, res) => {
+  console.log("HIT");
+    res.render('search', {
    // animes,
     loggedIn: req.session.loggedIn,
   });
+})
 
+router.post('/saveAnime', (req, res) => {
+console.log(`req body ${req.body}`);
 })
 
 /*
@@ -29,8 +34,8 @@ router.get('/', async (req, res) => {
       res.status(500).json(err);
     }
   });
-*/
-
+  */
+/*
 router.post('/', async (req, res) => {
     try {
       const newAnime = await Anime.create({
@@ -63,5 +68,5 @@ router.post('/', async (req, res) => {
       res.status(500).json(err);
     }
   });
-  
+  */
   module.exports = router;
