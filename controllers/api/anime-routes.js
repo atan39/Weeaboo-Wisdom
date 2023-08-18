@@ -1,5 +1,14 @@
 const router = require('express').Router();
 const { Anime } = require('../../models');
+
+router.get('/search', async (req, res) => {
+  res.render('search', {
+   // animes,
+    loggedIn: req.session.loggedIn,
+  });
+
+})
+
 /*
 router.get('/', async (req, res) => {
     try {

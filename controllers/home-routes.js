@@ -3,6 +3,7 @@
 //page for this would be userlist
 
 
+
 const router = require('express').Router();
 const { Anime } = require('../models');
 
@@ -11,18 +12,18 @@ const { Anime } = require('../models');
 
 router.get('/', async (req, res) => {
   try {
-    const dbAnimeData = await Anime.findAll({
-    });
+    // const dbAnimeData = await Anime.findAll({
+    // });
 
-    const animes = dbAnimeData.map((anime) =>
-    anime.get({ plain: true })
-    );
+    // const animes = dbAnimeData.map((anime) =>
+    // anime.get({ plain: true })
+    // );
     // Send over the 'loggedIn' session variable to the 'homepage' template
     //need to change the location of this page
   
     //may need to rework page
     res.render('homepage', {
-      animes,
+      //animes,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
