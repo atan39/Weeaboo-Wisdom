@@ -11,6 +11,10 @@ Anime.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     genre: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,7 +27,7 @@ Anime.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'user',

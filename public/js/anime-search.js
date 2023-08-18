@@ -232,7 +232,7 @@ const animeListJson = [];
 for(let i = 0; i < response.length; i++)
 {
     animeListJson.push({id: response[i]._id, title: response[i].title, 
-        genres: response[i].genres.join(', '), image: response[i].image, 
+        genre: response[i].genres.join(', '), imageUrl: response[i].image, 
         synopsis: response[i].synopsis});
 }
 
@@ -250,7 +250,7 @@ formated as shown
 animeListJson[index].id
 animeListJson[index].title
 animeListJson[index].genre --an array string
-animeListJson[index].image
+animeListJson[index].imageUrl
 animeListJson[index].synopsis
 to break into a json file you need to 
 JSON.parse(JSON.stringify(animeListJson)
@@ -284,16 +284,17 @@ function printResult(anime){
   animeNameEl.style.justifyContent = "center";
   result.append(animeNameEl);
   let imageEl = document.createElement('img'); 
-  imageEl.src = anime.image;
+  imageEl.src = anime.imageUrl;
   result.append(imageEl);
   let animeGengreEl = document.createElement('p');
-  animeGengreEl.innerHTML = '<strong> Genre(s): </strong> ' + anime.genres + '</br>'; 
+  animeGengreEl.innerHTML = '<strong> Genre(s): </strong> ' + anime.genre + '</br>'; 
    
   let animeSypnosisEl = document.createElement('p');
   animeSypnosisEl.innerHTML = '<strong> Sypnosis: </strong> ' + anime.synopsis + '</br>'; 
   result.append(animeGengreEl, animeSypnosisEl);
 
   saveBtn = document.createElement('button');
+  saveBtn.setAttribute("value", anime.id)
   saveBtn.classList.add("button","is-medium", "is-dark","is-responsive","is-rounded"); //style with bulma
   saveBtn.textContent = "Save";
   result.append(saveBtn);
@@ -356,35 +357,27 @@ function printResult(anime){
   saveBtn.textContent = "Save";
 */
   //look at later
-  saveBtn.addEventListener('click', async function (event, anime) {
+  
+  saveBtn.addEventListener('click', async function (event) {
 
-    //console.log(typeof (event.target.id));
-    if (event.target.hasAttribute('data-id')) {
+    console.log(event.target.id);
+    //if (event.target.hasAttribute('data-id')) {
       //const id = event.target.getAttribute('data-id');
-      const response = await fetch(`/api/animes`, {
+      const response = await fetch(`/api/animes/`, {
         method: 'POST',
-        body: JSON.stringify(anime),
+        body: JSON.stringify(event.target.id),
         headers: {
           'Content-Type': 'application/json',
         },
       });
   
       if (response.ok) {
-        document.location.replace('/profile');
+        //document.location.replace('/profile');
       } else {
         alert('Failed to create project');
       }
-    }
+    //}
   
-    //event.target.id
-    /* ???
-    POST REQUEST
-    axios.poost here?
-    axios.post to Anime?
-     */
-    //this goes to anime-routes
-    //anime-routes puts in the anime table if user exists
-    //look for user 
 
   });
 
