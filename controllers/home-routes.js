@@ -7,7 +7,6 @@ router.get('/', async (req, res) => {
     res.render('homepage', {
       loggedIn: req.session.loggedIn,
     });
-  
   });
 
 // // GET one anime
@@ -54,7 +53,7 @@ router.get('/search', withAuth, async (req, res) => {
 
     res.render('profile', {
       ...user,
-      loggedIn: true
+      logged_in: true
     });
   } catch (err) {
     res.status(500).json(err);
