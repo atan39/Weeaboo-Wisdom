@@ -19,11 +19,11 @@
     <nav>
       <a href="/">Home</a>
       {{#if loggedIn}}
-        <button id="logout" class="btn-no-style">Logout</button>
-         <button id="logout">Logout</button>
+        <button  class="no-button" id="logout">logout</button>
       {{else}}
-        <a href="/login">Login</a>
-      {{/if}}
+      {{!-- <button id="logout">logout</button> --}}
+      <a href="/login">Login</a>
+       {{/if}}
     </nav>
     <main>
 

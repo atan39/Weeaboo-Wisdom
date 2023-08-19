@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "anyanime": "^1.2.44",
     "axios": "^1.4.0",
     "bcrypt": "^5.0.0",
     "connect-session-sequelize": "^7.0.4",
