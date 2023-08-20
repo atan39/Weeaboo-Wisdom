@@ -12,6 +12,7 @@ router.get('/search', (req, res) => {
 
 router.post('/saveAnime', (req, res) => {
 console.log(`req body ${req.body}`);
+user
 })
 
 /*

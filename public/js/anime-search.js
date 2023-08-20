@@ -361,21 +361,22 @@ function printResult(anime){
   saveBtn.addEventListener('click', async function (event) {
 
     console.log(event.target.id);
+    console.log(anime);
     //if (event.target.hasAttribute('data-id')) {
       //const id = event.target.getAttribute('data-id');
-      const response = await fetch(`/api/animes/`, {
-        method: 'POST',
-        body: JSON.stringify(event.target.id),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      // const response = await fetch(`/api/animes/`, {
+      //   method: 'POST',
+      //   body: JSON.stringify(event.target.id),
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
   
-      if (response.ok) {
-        //document.location.replace('/profile');
-      } else {
-        alert('Failed to create project');
-      }
+      // if (response.ok) {
+      //   //document.location.replace('/profile');
+      // } else {
+      //   alert('Failed to create project');
+      // }
     //}
   
 

@@ -40,6 +40,27 @@ router.get('/', async (req, res) => {
 // });
 
 // Use withAuth middleware to prevent access to route
+router.get('/myAnilist', async (req, res) => {
+ // withAuth
+  try {
+    // Find the logged in user based on the session ID
+   const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Anime }],
+    });
+
+     const user = userData.get({ plain: true });
+
+    res.render('myAnilist', {
+      ...user,
+      loggedIn: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 
 router.get('/search', withAuth, async (req, res) => {
   try {
@@ -65,7 +86,7 @@ router.get('/search', withAuth, async (req, res) => {
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect to the homepage
   if (req.session.loggedIn) {
-    res.redirect('homepage');
+    res.redirect('myAnilist');
     return;
   }
   // Otherwise, render the 'login' template
