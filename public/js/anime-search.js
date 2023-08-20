@@ -355,13 +355,42 @@ function printResult(anime){
   saveBtn = document.createElement('button');
   saveBtn.classList.add("button","is-medium", "is-dark","is-responsive","is-rounded"); //style with bulma
   saveBtn.textContent = "Save";
+  animeListJson[index].id
+animeListJson[index].title
+animeListJson[index].genre --an array string
+animeListJson[index].imageUrl
+animeListJson[index].synopsis
 */
   //look at later
   
   saveBtn.addEventListener('click', async function (event) {
 
     console.log(event.target.id);
-    console.log(anime);
+    //console.log(anime.id);
+
+    let id = anime.id;
+    let title = anime.title;
+    let genre = anime.genre;
+    let imageUrl = anime.imageUrl;
+    let synopsis = anime.synopsis;
+    console.log(id);
+    console.log(title);
+    console.log(genre);
+    console.log(imageUrl);
+    console.log(synopsis);
+
+    const response = await fetch(`/api/animes/`, {
+      method: 'POST',
+      body: JSON.stringify({ id, title, genre, imageUrl, synopsis }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      //document.location.replace('/');
+    } else {
+      alert('Failed to add anime.');
+    }
+    
     //if (event.target.hasAttribute('data-id')) {
       //const id = event.target.getAttribute('data-id');
       // const response = await fetch(`/api/animes/`, {
@@ -380,8 +409,8 @@ function printResult(anime){
     //}
   
 
-  });
-
+  })
+}
   /*
   let cardFooter = document.createElement("footer");
   cardFooter.classList.add("card-footer");
@@ -392,7 +421,6 @@ function printResult(anime){
   cardFooter.style.paddingBottom = "20px";
   cardFooter.append(saveBtn);
 */
-}
 document
   .querySelector('.new-project-form')
   .addEventListener('submit', newFormHandler);

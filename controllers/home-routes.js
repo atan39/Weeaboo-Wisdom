@@ -61,8 +61,8 @@ router.get('/myAnilist', async (req, res) => {
 });
 
 
-
-router.get('/search', withAuth, async (req, res) => {
+/*
+router.get('/search', async (req, res) => {
   try {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
@@ -72,7 +72,7 @@ router.get('/search', withAuth, async (req, res) => {
 
     const user = userData.get({ plain: true });
 
-    res.render('profile', {
+    res.render('search', {
       ...user,
       logged_in: true
     });
@@ -80,7 +80,7 @@ router.get('/search', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+*/
 
 // Login route
 router.get('/login', (req, res) => {
