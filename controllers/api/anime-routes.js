@@ -45,7 +45,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-
 router.get('/search', (req, res) => {
   console.log("HIT");
     res.render('search', {
