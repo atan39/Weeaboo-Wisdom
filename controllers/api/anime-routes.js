@@ -1,5 +1,49 @@
 const router = require('express').Router();
-const { Anime } = require('../../models');
+const { Anime, User } = require('../../models');
+const withAuth = require('../../utils/auth');
+
+router.get('/', (req, res) => {
+  Anime.findAll({
+    })
+    .then((animeData) => {
+      res.status(200).json(animeData);
+    })
+    .catch( (err) => {
+      res.status(500).json(err);
+  })
+});
+
+/*
+router.post('/search', withAuth, async (req, res) => {
+  console.log("checking if this HITS");
+  
+  try {
+    const newAnime = await Anime.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newAnime);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+*/
+
+//testing
+router.post('/', async (req, res) => {
+  console.log("checking if this this is doing something");
+  try {
+    const newAnime = await Anime.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newAnime);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 
 router.get('/search', (req, res) => {
@@ -12,7 +56,6 @@ router.get('/search', (req, res) => {
 
 router.post('/saveAnime', (req, res) => {
 console.log(`req body ${req.body}`);
-user
 })
 
 /*
