@@ -1,9 +1,3 @@
-//require("dotenv").config({ path: "../../.env" });
-//put back after testing
-//const axios = require("axios");
-
-//5dd6af73bamsh0ef3eaf05df8638p1cb45djsna87e7ac7ba52
-
 const newFormHandler = async (event) => {
   event.preventDefault();
   console.log("test");
@@ -11,6 +5,7 @@ const newFormHandler = async (event) => {
   let genre = document.querySelector('#anime-genre');
   let type = document.querySelector('#anime-type');
 
+  //checks for null entries in form sumbit
   if(name)
   {
     name = name.value.trim();
@@ -29,12 +24,10 @@ const newFormHandler = async (event) => {
 }
 
 
-//types is TV OVA Movie
+//grabs json data of search based on anime name or genre and/or type
 
-//grabs json data of search based on anime name
-//passed in variables can be restructured to use name, genre, and type if you want
-//or we can pass in name, get the genre from axios get  list and run get again 
 async function findAnimeList(name, genres, type) {
+  //checks genres against possible inputs that api allow
   let genreList = [
     "Award Winning",
     "Action",
@@ -59,8 +52,7 @@ async function findAnimeList(name, genres, type) {
     "Hentai",
   ];
 
-  //console.log(genreList[0].toLowerCase());
-  
+  //formated parsed genres to pass in
   let genreUrlList = [
     "Award%20Winning%2C%20",
     "Action%2C%20",
@@ -85,18 +77,21 @@ async function findAnimeList(name, genres, type) {
     "Hentai%2C%20",
   ];
   
+  //checks types against possible inputs that api allow
   let typeList =["TV", "OVA", "Movie"];
+  //formated parsed types to pass in
   let typeUrlList =["TV%2C%20", "OVA%2C%20", "Movie%2C%20"];
   
 console.log(genres);
-    //checks if they enter a name or genre
+    //checks if they enter a name or genre. If neither then an alert
   if(name || genres)
   {
 
-    //checking genre entry fix later
+    //checking genre entry
+    //didn't complete error entry handling
     if(genres)
     {
-      //genres.replace(/\s/g, '');
+      //checks entries against genrelist and makes the parsed string to pass in
       const genreArray = genres.split(",");
       genres = "";
       for(let i = 0; i < genreArray.length; i++)
@@ -114,9 +109,10 @@ console.log(genres);
       genres = "";
     }
     
-
+    //checking type entry. Defaults to TV if nothing is passed
     if(type)
     {
+      //checks entries against typeList and makes the parsed string to pass in
       const typesArray = type.split(",");
       type = "";
       for(let i = 0; i < typesArray.length; i++)
@@ -134,10 +130,12 @@ console.log(genres);
       type = "TV";
     }
 
+    //checks if name is null
     if(!name)
     {
       name = "";
     }
+    //parses the name entry for api
     else{
       let aniemName = name.split(" ");
       name = "";
@@ -146,25 +144,7 @@ console.log(genres);
         name+= aniemName[i] + "%20"
       }
     }
-    
-    /*
-    const url = 'https://anime-db.p.rapidapi.com/anime?page=1&size=10&search=fullmetal';
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '5dd6af73bamsh0ef3eaf05df8638p1cb45djsna87e7ac7ba52',
-		'X-RapidAPI-Host': 'anime-db.p.rapidapi.com'
-	}
-};
-
-try {
-	const response = await fetch(url, options);
-	const result = await response.text();
-	console.log(result);
-} catch (error) {
-	console.error(error);
-}
-     */
+    //calls anime-db using parsed string
     const url = 'https://anime-db.p.rapidapi.com/anime?page=1&size=20&search=' + name + '&genres='+genres +'&sortBy=ranking&sortOrder=asc&types=' + type;
     console.log(url);
     const options = {
@@ -179,42 +159,11 @@ try {
       console.log(url);
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
+    //trims and formats the data
     return trimAnimeList(result.data);
     } catch (error) {
       console.error(error);
     }
-  
-    
-    /*
-    const options = {
-     method: "GET",
-      url: "https://anime-db.p.rapidapi.com/anime",
-     params: {
-        page: "1",
-        size: "20",
-        search: name,
-        genres: genres,
-       sortBy: "ranking",
-        sortOrder: "asc",
-        types: type
-      },
-      headers: {
-        //"X-RapidAPI-Key": process.env.DB_RAPIDKEY,
-        "X-RapidAPI-Key": "5dd6af73bamsh0ef3eaf05df8638p1cb45djsna87e7ac7ba52",
-        "X-RapidAPI-Host": "anime-db.p.rapidapi.com",
-      },
-    };
-
-    try {
-      const response = await fetch(options);
-      //console.log(response.data.data);
-      return trimAnimeList(response.data.data);
-    } 
-    catch (error) {
-      console.error(error);
-    }
-    */
 }
 else {
   alert('You need to enter a genre and/or anime');
@@ -222,13 +171,11 @@ else {
 
 }
 
-//trims the get request form serside api to send back to handlebars to use
-//or I can format it into HTML onbjects to append to the handlebar
+//trims the get request form serside api
 function trimAnimeList(response) {
-console.log(response.length);
 const animeListJson = [];
 
-
+//formats the reponse data to be used to print html and saved onto Anime table if saved
 for(let i = 0; i < response.length; i++)
 {
     animeListJson.push({id: response[i]._id, title: response[i].title, 
@@ -236,31 +183,16 @@ for(let i = 0; i < response.length; i++)
         synopsis: response[i].synopsis});
 }
 
-//console.log(animeListJson[0].genres);
-
-//the completed JSON to be used
 console.log(JSON.parse(JSON.stringify(animeListJson)));
 
-//returns the completed JSON to be used
-//return JSON.parse(JSON.stringify(animeListJson));
-
-/*
-returns obj array of the search result that can be used for html
-formated as shown
-animeListJson[index].id
-animeListJson[index].title
-animeListJson[index].genre --an array string
-animeListJson[index].imageUrl
-animeListJson[index].synopsis
-to break into a json file you need to 
-JSON.parse(JSON.stringify(animeListJson)
-*/
+//resets a previous anime db search request. if this is the first request, then nothing
 let content = document.querySelector('#anime-results');
 if(content.hasChildNodes())
   {
     removeAllChildNodes(content)
   }
 
+//dynamically makes HTML objects of all anime to show on search page 
 for(let i = 0; i < animeListJson.length; i++)
 {
   printResult(animeListJson[i]);
@@ -269,12 +201,14 @@ for(let i = 0; i < animeListJson.length; i++)
 return animeListJson;
 }
 
+//helper function to remove dynamically made HTML 
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
   }
 }
 
+//creates html object of passed in anime
 function printResult(anime){
 
   let content = document.querySelector('#anime-results');
@@ -300,74 +234,14 @@ function printResult(anime){
   result.append(saveBtn);
 
   content.append(result);
-
-  /*
-  let resultCard = document.createElement("div");
-  resultCard.classList.add("card");
-
-  let resultHeader = document.createElement("header");
-  resultHeader.classList.add("card-header");
-  resultCard.append(resultHeader);
-
-  let animeNameEl = document.createElement("p");
-  animeNameEl.classList.add("card-header-title");
-  animeNameEl.textContent = anime.title; 
-  animeNameEl.style.justifyContent = "center";
-  resultHeader.append(animeNameEl);
-
-  let resultBody = document.createElement("div");
-  resultBody.classList.add("card-content", "is-size-5-mobile", "is-size-5-touch", "is-size-5-tablet", "is-size-5-desktop", "is-size-5-widescreen", "is-size-5-fullhd");
-  resultCard.append(resultBody);
-
-  //create media div for image
-  let mediaDiv = document.createElement("div");
-  mediaDiv.classList.add("media");
-  resultBody.append(mediaDiv);
-
-  let leftImageDiv = document.createElement("div");
-  leftImageDiv.classList.add("media-left");
-  leftImageDiv.style.width = "20%";
-  mediaDiv.append(leftImageDiv);
-
   
-  let imageFigure = document.createElement("figure");
-  imageFigure.classList.add("image"); 
-  leftImageDiv.append(imageFigure);
-
-  let imageEl = document.createElement('img'); 
-  imageEl.src = anime.image;
-  imageFigure.append(imageEl);
-
-  let mediaContent = document.createElement("div");
-  mediaContent.classList.add("media-content");
-  mediaDiv.append(mediaContent);
-
-
-  let animeGengreEl = document.createElement('p');
-  animeGengreEl.innerHTML = '<strong> Genre(s): </strong> ' + anime.genres + '</br>'; 
-   
-  let animeSypnosisEl = document.createElement('p');
-  animeSypnosisEl.innerHTML = '<strong> Sypnosis: </strong> ' + anime.genres + '</br>'; 
-
-  mediaContent.style.textAlign = "left";
-  mediaContent.append(animeGengreEl, animeSypnosisEl);  
-  
-  saveBtn = document.createElement('button');
-  saveBtn.classList.add("button","is-medium", "is-dark","is-responsive","is-rounded"); //style with bulma
-  saveBtn.textContent = "Save";
-  animeListJson[index].id
-animeListJson[index].title
-animeListJson[index].genre --an array string
-animeListJson[index].imageUrl
-animeListJson[index].synopsis
-*/
-  //look at later
-  
+  //save function in save button that makes a POST request to Anime Table
   saveBtn.addEventListener('click', async function (event) {
 
     console.log(event.target.id);
     //console.log(anime.id);
 
+    //POST doesn't like something.id so I converted into variables
     let id = anime.id;
     let title = anime.title;
     let genre = anime.genre;
@@ -391,41 +265,12 @@ animeListJson[index].synopsis
       alert('Failed to add anime.');
     }
     
-    //if (event.target.hasAttribute('data-id')) {
-      //const id = event.target.getAttribute('data-id');
-      // const response = await fetch(`/api/animes/`, {
-      //   method: 'POST',
-      //   body: JSON.stringify(event.target.id),
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-  
-      // if (response.ok) {
-      //   //document.location.replace('/profile');
-      // } else {
-      //   alert('Failed to create project');
-      // }
-    //}
-  
-
   })
 }
-  /*
-  let cardFooter = document.createElement("footer");
-  cardFooter.classList.add("card-footer");
-  resultCard.append(cardFooter);
-    
-  cardFooter.style.justifyContent = "center";
-  cardFooter.style.paddingTop = "8px";
-  cardFooter.style.paddingBottom = "20px";
-  cardFooter.append(saveBtn);
-*/
 document
   .querySelector('.new-project-form')
   .addEventListener('submit', newFormHandler);
 
-//findAnimeList("fullMetal", "", "");
 
 
 
