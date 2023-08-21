@@ -1,6 +1,26 @@
 <div class="row">
   <div class="col-auto">
     <h2>Welcome! {{name}}</h2>
+
   </div>
 </div>
+ {{#if loggedIn}}
+ {{#if animes.length}}
+  <h2>Anime length! {{animes.length}}</h2>
+  <div class="col-md-6 project-list">
+    <h3>Anime Favorites:</h3>
+
+    {{#each animes as |anime|}}
+    <div class="row mb-2">
+      <div class="col-md-8">
+         <h3>Title: {{anime.title}}</h3>
+        <img src={{anime.imageUrl}}>
+        <p>Genre: {{anime.genre}}</p>
+        <p>Synopsis: {{anime.synopsis}}</p>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{/if}}
 
