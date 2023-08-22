@@ -28,11 +28,13 @@ Finally, you would run
 node server.js
 ```
 Then you can open it up on http://localhost:3001/
+As well as https://weeaboo-wisdomm-04ded8f01ad7.herokuapp.com/
 
 ## Resources
 animegif - https://www.npmjs.com/package/anyanime?activeTab=readme <br>
 anime api- https://rapidapi.com/brian.rofiq/api/anime-db <br>
 Startup code from UofM Bootcamp week 14 miniproject 
+
 
 ## Pictures
 ![image](https://github.com/atan39/Weeaboo-Wisdom/assets/126987766/ac6fd15e-06f4-4070-b0ae-e90beada1c5f) <br>
@@ -44,5 +46,5 @@ Startup code from UofM Bootcamp week 14 miniproject
 Luis Cerna - Handlebars/Views <br>
 Louis Antolin - Controllers and Routes <br>
 Dylan Allison - Handlebars/Views <br>
-Ashley Tan - CSS, models, README and animegif <br>
+Ashley Tan - CSS, models, and animegif <br>
 Thanks for TA's and tutors for help as well
